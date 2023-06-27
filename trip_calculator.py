@@ -35,22 +35,32 @@
 #Імпортую бібліотеку
 import math
 #Число учасників походу
-num_of_participation = int(input("Number of people? "))
+num_of_participation = (input("Number of people? "))
+if num_of_participation.isnumeric():
+    num_of_participation = int(num_of_participation)
+else:
+    print("Please redeem a integer")
+    exit(1)
 #Число днів в поході
-duration_days = int(input("Amount of days? "))
+duration_days = (input("Amount of days? "))
+if duration_days.isnumeric():
+    duration_days = int(duration_days)
+else:
+    print("Please redeem a integer")
+    exit(1)
 #Змінна щоб ножів було не мешне двох на похід
 knifes = num_of_participation/2
-if knifes <= 2:
-    knifes = 2
+if knifes <= 2: knifes = 2
 #Словник
 trip_dict = {
-    'backpacks' : 1 * num_of_participation,
-    'raincoats' : 1 * num_of_participation,
-    'sleeping_bags' : 1 * num_of_participation,
-    'carpets' : 1 * num_of_participation,
-    'tents' : math.ceil(1 * num_of_participation/3), #Використав бібліотеку math для того щоб закругляти до найбільшного числа щоб всі жили в палатках
+    'backpacks' : num_of_participation,
+    'raincoats' : num_of_participation,
+    'sleeping_bags' : num_of_participation,
+    'carpets' : num_of_participation,
+    #Використав бібліотеку math для того щоб закругляти до найбільшного числа щоб всі жили в палатках
+    'tents' : math.ceil(1 * num_of_participation/3),
     'cauldrons' : 1,
-    'bowls' : 1 * num_of_participation,
+    'bowls' : num_of_participation,
     'knifes' : round(knifes), #Закругляю змінну
 }
 #Вивожу данні в консоль
