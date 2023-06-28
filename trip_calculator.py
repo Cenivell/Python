@@ -31,23 +31,24 @@
 ###########################
 # Рішення нижче
 ###########################
-
+#Функція для перевірки чи змінна є числом
+def check():
+    global num_of_participation
+    global duration_days
+    if num_of_participation.isnumeric() and duration_days.isnumeric():
+        num_of_participation = int(num_of_participation)
+        num_of_participation = int(duration_days)
+    else:
+        print("Please make sure all values are integers")
+        exit(1)
 #Імпортую бібліотеку
 import math
 #Число учасників походу
 num_of_participation = (input("Number of people? "))
-if num_of_participation.isnumeric():
-    num_of_participation = int(num_of_participation)
-else:
-    print("Please redeem a integer")
-    exit(1)
 #Число днів в поході
 duration_days = (input("Amount of days? "))
-if duration_days.isnumeric():
-    duration_days = int(duration_days)
-else:
-    print("Please redeem a integer")
-    exit(1)
+#Викликаю функцію
+check()
 #Змінна щоб ножів було не мешне двох на похід
 knifes = num_of_participation/2
 if knifes <= 2: knifes = 2
