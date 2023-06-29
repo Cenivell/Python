@@ -32,37 +32,36 @@
 # Рішення нижче
 ###########################
 #Функція для перевірки чи змінна є числом
-def check():
-    global num_of_participation
-    global duration_days
-    if num_of_participation.isnumeric() and duration_days.isnumeric():
-        num_of_participation = int(num_of_participation)
-        num_of_participation = int(duration_days)
+def is_number(number):
+    if number.isnumeric():
+        pass
     else:
-        print("Please make sure all values are integers")
+        print("Please redeem an integer")
         exit(1)
 #Імпортую бібліотеку
 import math
 #Число учасників походу
 num_of_participation = (input("Number of people? "))
+#Викликаю функцію
+is_number(num_of_participation)
 #Число днів в поході
 duration_days = (input("Amount of days? "))
 #Викликаю функцію
-check()
+is_number(duration_days)
 #Змінна щоб ножів було не мешне двох на похід
-knifes = num_of_participation/2
+knifes = int(num_of_participation)/2
 if knifes <= 2: knifes = 2
 #Словник
 trip_dict = {
-    'backpacks' : num_of_participation,
-    'raincoats' : num_of_participation,
-    'sleeping_bags' : num_of_participation,
-    'carpets' : num_of_participation,
+    'backpacks': num_of_participation,
+    'raincoats': num_of_participation,
+    'sleeping_bags': num_of_participation,
+    'carpets': num_of_participation,
     #Використав бібліотеку math для того щоб закругляти до найбільшного числа щоб всі жили в палатках
-    'tents' : math.ceil(1 * num_of_participation/3),
-    'cauldrons' : 1,
-    'bowls' : num_of_participation,
-    'knifes' : round(knifes), #Закругляю змінну
+    'tents': math.ceil(1 * int(num_of_participation)/3),
+    'cauldrons': 1,
+    'bowls': num_of_participation,
+    'knifes': round(knifes), #Закругляю змінну
 }
 #Вивожу данні в консоль
 for key, value in trip_dict.items():
