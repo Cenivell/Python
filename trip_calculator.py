@@ -31,3 +31,41 @@
 ###########################
 # Рішення нижче
 ###########################
+#Функція для перевірки чи змінна є числом
+def check_is_number(number: str or int):
+    if isinstance(number, int) or isinstance(number, str) and number.isnumeric():
+        pass
+    else:
+        exit("Please make sure that all values are integers")
+#Імпортую бібліотеку
+import math
+#Число учасників походу
+num_of_participation = (input("Number of people? "))
+#Викликаю функцію
+check_is_number(num_of_participation)
+#Конвертую в інту
+num_of_participation = int(num_of_participation)
+#Число днів в поході
+duration_days = (input("Amount of days? "))
+#Викликаю функцію
+check_is_number(duration_days)
+#Конвертую в інту
+duration_days = int(duration_days)
+#Змінна щоб ножів було не мешне двох на похід
+knifes = num_of_participation/2
+if knifes <= 2: knifes = 2
+#Словник
+trip_dict = {
+    'backpacks': num_of_participation,
+    'raincoats': num_of_participation,
+    'sleeping_bags': num_of_participation,
+    'carpets': num_of_participation,
+    #Використав бібліотеку math для того щоб закругляти до найбільшного числа щоб всі жили в палатках
+    'tents': math.ceil(num_of_participation/3),
+    'cauldrons': 1,
+    'bowls': num_of_participation,
+    'knifes': round(knifes), #Закругляю змінну
+}
+#Вивожу данні в консоль
+for key, value in trip_dict.items():
+    print('Amount of', key, value)
