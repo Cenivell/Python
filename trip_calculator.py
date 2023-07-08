@@ -90,64 +90,62 @@ trip_items_dict = {
     'knifes': round(knifes), #Закругляю змінну
 }
 #Щоб не робити повторювальну дії вивожу в змінну
-multiply_people_by_days=num_of_participation*duration_days
-multiply_people_by_days_by_3=multiply_people_by_days*3
+multiply_people_by_3=num_of_participation*3
 #Словник для продуктів
 trip_food_variation_1_dict = {
-    'Гранола горіхова з шоколадом': multiply_people_by_days, #calories - 442 water -200 weight - 100
-    'Харчо грузинське з яловичиною': multiply_people_by_days, #calories - 187 water - 350 weight - 57
-    'Гречка з яловичиною': multiply_people_by_days, #calories - 320 water - 350 weight - 100
-    'Чай карпатський "Чаїдло"': multiply_people_by_days, #calories - 213 water - 1000 weight - 40
-    'Батончик енергетичний OMNOM неспішне какао"': multiply_people_by_days_by_3,  #calories-621 weight - 150(3 на день)
+    'Гранола горіхова з шоколадом': num_of_participation, #calories - 442 water -200 weight - 100
+    'Харчо грузинське з яловичиною': num_of_participation, #calories - 187 water - 350 weight - 57
+    'Гречка з яловичиною': num_of_participation, #calories - 320 water - 350 weight - 100
+    'Чай карпатський "Чаїдло"': num_of_participation, #calories - 213 water - 1000 weight - 40
+    'Батончик енергетичний OMNOM неспішне какао"': multiply_people_by_3,  #calories-621 weight - 150(3 на день)
 }
 trip_food_variation_2_dict = {
-    'Каша бананова': multiply_people_by_days, #calories - 456 water -200 weight - 100
-    'Борщ з яловичиною та квасолею': multiply_people_by_days, #calories - 160 water - 350 weight - 50
-    'Картопля з курячим філе': multiply_people_by_days, #calories - 345 water - 350 weight - 90
-    'Чай карпатський "Чаїдло"': multiply_people_by_days, #calories - 213 water - 1000 weight - 40
-    'Батончик енергетичний OMNOM крута журавлина"': multiply_people_by_days_by_3,  #calories- 674 weight-150(3 на день)
+    'Каша бананова': num_of_participation, #calories - 456 water -200 weight - 100
+    'Борщ з яловичиною та квасолею': num_of_participation, #calories - 160 water - 350 weight - 50
+    'Картопля з курячим філе': num_of_participation, #calories - 345 water - 350 weight - 90
+    'Чай карпатський "Чаїдло"': num_of_participation, #calories - 213 water - 1000 weight - 40
+    'Батончик енергетичний OMNOM крута журавлина"': multiply_people_by_3,  #calories- 674 weight-150(3 на день)
 }
 trip_food_variation_3_dict = {
-    'Каша кукурудзяна з насінням чіа та маком': multiply_people_by_days, #calories - 411 water -200 weight - 100
-    'Суп гороховий з яловичиною': multiply_people_by_days, #calories - 185 water - 350 weight - 60
-    'Полента з яловичиною': multiply_people_by_days, #calories - 329 water - 350 weight - 100
-    'Чай карпатський "Чаїдло"': multiply_people_by_days, #calories - 213 water - 1000 weight - 40
-    'Батончик енергетичний OMNOM заряджене еспресо"': multiply_people_by_days_by_3,  #calories-615 weight-150(3 на день)
+    'Каша кукурудзяна з насінням чіа та маком': num_of_participation, #calories - 411 water -200 weight - 100
+    'Суп гороховий з яловичиною': num_of_participation, #calories - 185 water - 350 weight - 60
+    'Полента з яловичиною': num_of_participation, #calories - 329 water - 350 weight - 100
+    'Чай карпатський "Чаїдло"': num_of_participation, #calories - 213 water - 1000 weight - 40
+    'Батончик енергетичний OMNOM заряджене еспресо"': multiply_people_by_3,  #calories-615 weight-150(3 на день)
 }
 #Список ваги продуктів
 food_weight_list=[100,57,100,40,150]
 food_weight_list2=[100,50,90,40,150]
 food_weight_list3=[100,60,100,40,150]
 #Загально вага продуктів
-if duration_days<=1:
-    total_food_weight=multiply_people_by_days*sum(food_weight_list)
-elif duration_days==2:
-    total_food_weight=multiply_people_by_days*(sum(food_weight_list)+sum(food_weight_list2))/2
-else:
-    total_food_weight=multiply_people_by_days*(sum(food_weight_list)+sum(food_weight_list2)+sum(food_weight_list3))/3
-#Вага на людину
-food_weight_per_person=total_food_weight/num_of_participation
+total_food_weight=0
 #Вивожу в метод щоб не робити повторювальну дію
-def print_output_in_console(dictionary: dict, days: int):
+def print_output_in_console(dictionary: dict):
     for key, value in dictionary.items():
-        if days == 2:
-            print('Amount of', key, int(value/2))
-        elif days >= 3:
-            print('Amount of', key, int(value/3))
-        else:
-            print('Amount of', key, int(value))
+                print('Amount of', key, int(value))
 #Вивожу в консоль
 print('------------------Items------------------')
-print_output_in_console(trip_items_dict,0)
+print_output_in_console(trip_items_dict)
 print('----------------Products----------------')
-if duration_days >= 1:
-    print("Food variation 1")
-    print_output_in_console(trip_food_variation_1_dict,duration_days)
-if duration_days >= 2:
-    print("Food variation 2")
-    print_output_in_console(trip_food_variation_2_dict,duration_days)
-if duration_days >= 3:
-    print("Food variation 3")
-    print_output_in_console(trip_food_variation_3_dict,duration_days)
+x = 0
+while x<duration_days:
+    x+=1
+    print("Food for day "+str(x))
+    print_output_in_console(trip_food_variation_1_dict)
+    total_food_weight+=sum(food_weight_list)*num_of_participation
+    if x >= duration_days:
+        break
+    x+=1
+    print("Food for day "+str(x))
+    print_output_in_console(trip_food_variation_2_dict)
+    total_food_weight+=sum(food_weight_list2)*num_of_participation
+    if x >= duration_days:
+        break
+    x+=1
+    print("Food for day "+str(x))
+    print_output_in_console(trip_food_variation_3_dict)
+    total_food_weight+=sum(food_weight_list3)*num_of_participation
+#Вага на людину
+food_weight_per_person=total_food_weight/num_of_participation
 print("Total food weight is",int(total_food_weight))
 print("Food weight per person is",int(food_weight_per_person))
