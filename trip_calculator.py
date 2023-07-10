@@ -54,30 +54,38 @@
 ###########################
 # Рішення нижче
 ###########################
+#Імпортую бібліотеку math
+import math
 #Функція для перевірки чи змінна є числом
 def check_is_number(number: str or int):
     if isinstance(number, int) or isinstance(number, str) and number.isnumeric():
         pass
     else:
         exit("Please make sure that all values are integers")
-#Імпортую бібліотеку
-import math
+#Функція для виведення словника в консоль
+def print_output_in_console(dictionary: dict):
+    for key, value in dictionary.items():
+        print('Amount of', key, int(value))
 #Число учасників походу
 num_of_participation = (input("Number of people? "))
-#Викликаю функцію
+#Перевіряю чи число учасників є числом
 check_is_number(num_of_participation)
 #Конвертую в інту
 num_of_participation = int(num_of_participation)
-#Число днів в поході
+#Теж саме що й зверху
 duration_days = (input("Amount of days? "))
-#Викликаю функцію
 check_is_number(duration_days)
-#Конвертую в інту
 duration_days = int(duration_days)
 #Змінна щоб ножів було не мешне двох на похід
 knifes = num_of_participation/2
 if knifes <= 2: knifes = 2
-#Словник
+#Змінна в якій множу число учасників на 3
+multiply_people_by_3 = num_of_participation*3
+#Змінна в яку записується загальна вага продуктів
+total_food_weight = 0
+#Змінна в яку записується вага продуктів на людину
+food_weight_per_person = total_food_weight/num_of_participation
+#Словники:
 trip_items_dict = {
     'backpacks': num_of_participation,
     'raincoats': num_of_participation,
@@ -89,9 +97,6 @@ trip_items_dict = {
     'bowls': num_of_participation,
     'knifes': round(knifes), #Закругляю змінну
 }
-#Щоб не робити повторювальну дії вивожу в змінну
-multiply_people_by_3=num_of_participation*3
-#Словник для продуктів
 trip_food_variation_1_dict = {
     'Гранола горіхова з шоколадом': num_of_participation, #calories - 442 water -200 weight - 100
     'Харчо грузинське з яловичиною': num_of_participation, #calories - 187 water - 350 weight - 57
@@ -113,17 +118,28 @@ trip_food_variation_3_dict = {
     'Чай карпатський "Чаїдло"': num_of_participation, #calories - 213 water - 1000 weight - 40
     'Батончик енергетичний OMNOM заряджене еспресо"': multiply_people_by_3,  #calories-615 weight-150(3 на день)
 }
-#Список ваги продуктів
-food_weight_list=[100,57,100,40,150]
-food_weight_list2=[100,50,90,40,150]
-food_weight_list3=[100,60,100,40,150]
-#Загально вага продуктів
-total_food_weight=0
-#Вивожу в метод щоб не робити повторювальну дію
-def print_output_in_console(dictionary: dict):
-    for key, value in dictionary.items():
-                print('Amount of', key, int(value))
-#Вивожу в консоль
+food_weight_dict_var_1={
+    'Гранола горіхова з шоколадом':100,
+    'Харчо грузинське з яловичиною':57,
+    'Гречка з яловичиною':100,
+    'Чай карпатський "Чаїдло"':40,
+    'Батончик енергетичний OMNOM неспішне какао"':150,
+}
+food_weight_dict_var_2={
+    'Каша бананова':100,
+    'Борщ з яловичиною та квасолею':50,
+    'Картопля з курячим філе':90,
+    'Чай карпатський "Чаїдло"':40,
+    'Батончик енергетичний OMNOM крута журавлина"':150,
+}
+food_weight_dict_var_3={
+    'Каша кукурудзяна з насінням чіа та маком':100,
+    'Суп гороховий з яловичиною':60,
+    'Полента з яловичиною':100,
+    'Чай карпатський "Чаїдло"':40,
+    'Батончик енергетичний OMNOM заряджене еспресо"':150,
+}
+#Виписую данній в консоль
 print('------------------Items------------------')
 print_output_in_console(trip_items_dict)
 print('----------------Products----------------')
@@ -132,20 +148,21 @@ while x<duration_days:
     x+=1
     print("Food for day "+str(x))
     print_output_in_console(trip_food_variation_1_dict)
-    total_food_weight+=sum(food_weight_list)*num_of_participation
+    total_food_weight+=sum(food_weight_dict_var_1.values())*num_of_participation
     if x >= duration_days:
         break
     x+=1
     print("Food for day "+str(x))
     print_output_in_console(trip_food_variation_2_dict)
-    total_food_weight+=sum(food_weight_list2)*num_of_participation
+    total_food_weight+=sum(food_weight_dict_var_2.values())*num_of_participation
     if x >= duration_days:
         break
     x+=1
     print("Food for day "+str(x))
     print_output_in_console(trip_food_variation_3_dict)
-    total_food_weight+=sum(food_weight_list3)*num_of_participation
-#Вага на людину
-food_weight_per_person=total_food_weight/num_of_participation
+    total_food_weight+=sum(food_weight_dict_var_3.values())*num_of_participation
+#Виписую вагу
 print("Total food weight is",int(total_food_weight))
+#Виписую вагу на людину
 print("Food weight per person is",int(food_weight_per_person))
+
