@@ -67,14 +67,6 @@ def check_is_number(number: str or int):
         exit("Please make sure that all values are integers")
 
 
-def sum_weights_in_dict(dictionary: dict,) -> int:
-    '''Функція для додавання ваги з слоавників'''
-    sum_weight = 0
-    for item in dictionary.values():
-        sum_weight += item['weight']
-    return sum_weight
-
-
 def print_item_output_in_console(dictionary: dict,):
     '''Функція для виведення словника в консоль'''
     for key, value in dictionary.items():
@@ -86,10 +78,11 @@ def print_food_output_in_console(dictionary: dict):
         print(f'{key}: {value["amount"]}')
 
 
-def add_amount_to_food_dictionary(dictionary: dict, x: int,):
+def add_amount_to_food_dictionary(dictionary: dict, x: int,) -> dict:
     '''Функція додавання кількості їди для числа'''
     for key, value in dictionary.items():
         dictionary[key]['amount'] += dictionary[key]['number_per_person_per_day']*x
+    return dictionary
 
 
 #Приймаю вхідні данні та перевіряю чи вони є числом
@@ -222,17 +215,17 @@ x = 0
 while x < duration_days:
     x += 1
     add_amount_to_food_dictionary(trip_food_variation_1_dict, num_of_participation)
-    total_food_weight += sum_weights_in_dict(trip_food_variation_1_dict)
+    total_food_weight += sum(item.get('weight', 0) for item in trip_food_variation_1_dict.values())
     if x >= duration_days:
         break
     x += 1
     add_amount_to_food_dictionary(trip_food_variation_2_dict, num_of_participation)
-    total_food_weight += sum_weights_in_dict(trip_food_variation_2_dict)
+    total_food_weight += sum(item.get('weight', 0) for item in trip_food_variation_2_dict.values())
     if x >= duration_days:
         break
     x += 1
     add_amount_to_food_dictionary(trip_food_variation_3_dict,num_of_participation)
-    total_food_weight += sum_weights_in_dict(trip_food_variation_3_dict)
+    total_food_weight += sum(item.get('weight', 0) for item in trip_food_variation_3_dict.values())
 #Виписую кількість продуктів в консоль
 print('Чай карпатський "Чаїдло"', num_of_participation*duration_days)
 if duration_days >= 1:
