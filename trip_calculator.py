@@ -73,15 +73,14 @@ def print_output_in_console(dictionary: dict,):
         print(f'{key}: {math.ceil(value)}')
 
 
-def add_amount_to_food_dictionary(current_dict: dict, x: dict) -> dict:
+def add_amount_to_food_dictionary(current_dict: dict, out_dict) -> dict:
     '''Функція додавання кількості їди для числа'''
-    for dictionary in [current_dict]:
-        for key in dictionary.keys():
-            if key in out_dict.keys():
-                x[key] += dictionary[key]['amount'] * num_of_participation
-            else:
-                x.update({key: dictionary[key]['amount'] * num_of_participation})
-    return x
+    for key in current_dict.keys():
+        if key in out_dict.keys():
+            out_dict[key] += current_dict[key]['amount'] * num_of_participation
+        else:
+            out_dict.update({key: current_dict[key]['amount'] * num_of_participation})
+    return out_dict
 
 
 #Приймаю вхідні данні та перевіряю чи вони є числом
@@ -217,15 +216,15 @@ print('------------------Items------------------')
 print_output_in_console(trip_items_dict)
 print('----------------Products----------------')
 #Вираховую кількість продуктів
-x = 0; y = 0
+current_days = 0; variation_num = 0
 prefix = "trip_food_variation_"; suffix = "_dict"
-while x < duration_days:
-    x += 1
-    y += 1
-    add_amount_to_food_dictionary(globals()[prefix + str(y) + suffix], out_dict)
-    total_food_weight += sum(item.get('weight', 0) for item in globals()[prefix + str(y) + suffix].values())
-    if y == 3:
-        y = 0
+while current_days < duration_days:
+    current_days += 1
+    variation_num += 1
+    add_amount_to_food_dictionary(globals()[prefix + str(variation_num) + suffix], out_dict)
+    total_food_weight += sum(item.get('weight', 0) for item in globals()[prefix + str(variation_num) + suffix].values())
+    if variation_num == 3:
+        variation_num = 0
 #Виписую кількість продуктів в консоль
 print_output_in_console(out_dict)
 #Виписую вагу
