@@ -229,5 +229,5 @@ while current_days < duration_days:
 print_output_in_console(out_dict)
 #Виписую вагу
 total_food_weight *= num_of_participation
-print("Total food weight is",int(total_food_weight),'mg.')
-print("Food weight per person is",int(total_food_weight/num_of_participation),'mg.')
+print("Total food weight is",int(total_food_weight),'g.')
+print("Food weight per person is",int(total_food_weight/num_of_participation),'g.')
