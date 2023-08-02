@@ -106,6 +106,18 @@ def add_amount_to_food_dictionary(current_dict: dict, out_dict) -> dict:
     return out_dict
 
 
+def calculate_daily_log(current_days,variation_num,total_food_weight):
+    while current_days < duration_days:
+        current_days += 1
+        variation_num += 1
+        print(f"Distance travelled on day {str(current_days)} is, {trip_kilometers_per_day[current_days]}, kilometers")
+        remove_amount_from_food_dictionary(globals()[prefix + str(variation_num) + suffix], out_dict)
+        total_food_weight -= sum(item.get('weight', 0)\
+        for item in globals()[prefix + str(variation_num) + suffix].values())*num_of_participation#Не влізло в один рядок
+        if variation_num == 3:
+            variation_num = 0
+        print("Total food weight left:", int(total_food_weight), 'g.')
+        print("Food weight per person is", int(total_food_weight / num_of_participation), 'g.')
 #Приймаю вхідні данні та перевіряю чи вони є числом
 num_of_participation = (input("Number of people? "))
 check_is_number(num_of_participation)
@@ -244,8 +256,7 @@ while trip_distance > 0:
         distance_travelled = trip_distance
     duration_days += 1
     trip_distance -= distance_travelled
-    trip_kilometers_per_day[str(duration_days)] = distance_travelled
-    print(trip_distance)
+    trip_kilometers_per_day[duration_days] = distance_travelled
 #Виписую данні в консоль
 print('----------------Trip Info---------------')
 print("Trip duration is", duration_days)
@@ -274,14 +285,4 @@ print("Total food weight is", int(total_food_weight), 'g.')
 print("Food weight per person is", int(total_food_weight/num_of_participation), 'g.')
 #Виписую дистанцію пройдену за день + залишок ваги
 print('--------------Daily Log----------------')
-while current_days < duration_days:
-    current_days += 1
-    variation_num += 1
-    print("Distance travelled on day "+str(current_days)+" is",trip_kilometers_per_day[str(current_days)],"kilometers")
-    remove_amount_from_food_dictionary(globals()[prefix + str(variation_num) + suffix], out_dict)
-    total_food_weight -= sum(item.get('weight', 0)\
-    for item in globals()[prefix + str(variation_num) + suffix].values())*num_of_participation#Не влізло в один рядок
-    if variation_num == 3:
-        variation_num = 0
-    print("Total food weight left:", int(total_food_weight), 'g.')
-    print("Food weight per person is", int(total_food_weight / num_of_participation), 'g.')
+calculate_daily_log(current_days, variation_num, total_food_weight)
