@@ -53,9 +53,9 @@
 # Важливо, що ця частина внесе певні зміни у попередній етап, що може відобразитись узміні певних частин вже сучасних розрахунків.
 
 # Технічне завдання:
-# 1) На основі нової змінної trip_distance, що виражатиметься у км, розрахувати тривалість проходження маршруту у днях. 
+# 1) На основі нової змінної trip_distance, що виражатиметься у км, розрахувати тривалість проходження маршруту у днях.
 # Основним нюансом розрахунків слід вважати розрахунок, щоу  середньому група проходить 15-20 км за день, і ця величина не є сталою для кожного дня
-# (тобто може бути як 15, так і 20 км), тому цю величину ми будемо рандомізувати для більшої точності наших обрахунків. 
+# (тобто може бути як 15, так і 20 км), тому цю величину ми будемо рандомізувати для більшої точності наших обрахунків.
 # Остача на останній день може бути, але не менша ніж наша похибка, і не більша, ніж мінімальний відрізок маршруту.
 # 2) Зробити розрахунок динамічних показників на кожен день проходження маршруту.
 
@@ -63,13 +63,14 @@
 # Результатом роботи коду має бути:
 # 1) Зміна розрахунку тривалості походу на основі підрахунку днів, необхідних для подолання маршруту.
 # 2) Розрахунок у окрему змінну та вивід з неї у консоль короткого звіту по кожному дню, що відображатиме:
-# кількість пройдених км, кількість/вага продуктів, що залишилася та зміну ваги продуктів з розподілом на кожного учасника походу. 
+# кількість пройдених км, кількість/вага продуктів, що залишилася та зміну ваги продуктів з розподілом на кожного учасника походу.
 
 ###########################
 # Рішення нижче
 ###########################
-#Імпортую бібліотеку math
+#Імпортую бібліотеки
 import math
+import random
 
 
 #функції
@@ -87,6 +88,14 @@ def print_output_in_console(dictionary: dict,):
         print(f'{key}: {math.ceil(value)}')
 
 
+def remove_amount_from_food_dictionary(current_dict: dict, out_dict) -> dict:
+    '''Функція додавання кількості їди для числа'''
+    for key in current_dict.keys():
+        if key in out_dict.keys():
+            out_dict[key] -= current_dict[key]['amount'] * num_of_participation
+    return out_dict
+
+
 def add_amount_to_food_dictionary(current_dict: dict, out_dict) -> dict:
     '''Функція додавання кількості їди для числа'''
     for key in current_dict.keys():
@@ -97,14 +106,26 @@ def add_amount_to_food_dictionary(current_dict: dict, out_dict) -> dict:
     return out_dict
 
 
+def calculate_daily_log(current_days,variation_num,total_food_weight):
+    while current_days < duration_days:
+        current_days += 1
+        variation_num += 1
+        print(f"Distance travelled on day {str(current_days)} is, {trip_kilometers_per_day[current_days]}, kilometers")
+        remove_amount_from_food_dictionary(globals()[prefix + str(variation_num) + suffix], out_dict)
+        total_food_weight -= sum(item.get('weight', 0)\
+        for item in globals()[prefix + str(variation_num) + suffix].values())*num_of_participation#Не влізло в один рядок
+        if variation_num == 3:
+            variation_num = 0
+        print("Total food weight left:", int(total_food_weight), 'g.')
+        print("Food weight per person is", int(total_food_weight / num_of_participation), 'g.')
 #Приймаю вхідні данні та перевіряю чи вони є числом
 num_of_participation = (input("Number of people? "))
 check_is_number(num_of_participation)
 num_of_participation = int(num_of_participation)
 
-duration_days = (input("Amount of days? "))
-check_is_number(duration_days)
-duration_days = int(duration_days)
+trip_distance = (input("trip_distance?(kilometers) "))
+check_is_number(trip_distance)
+trip_distance = int(trip_distance)
 
 #Змінна щоб ножів було не мешне двох на похід
 knifes = num_of_participation/2
@@ -225,7 +246,21 @@ trip_food_variation_3_dict = {
 }
 out_dict = {
 }
+trip_kilometers_per_day = {
+}
+duration_days = 0
+while trip_distance > 0:
+    if trip_distance > 14:
+        distance_travelled = random.randint(15, 20)
+    else:
+        distance_travelled = trip_distance
+    duration_days += 1
+    trip_distance -= distance_travelled
+    trip_kilometers_per_day[duration_days] = distance_travelled
 #Виписую данні в консоль
+print('----------------Trip Info---------------')
+print("Trip duration is", duration_days)
+print("Number of participation is", num_of_participation)
 print('------------------Items------------------')
 print_output_in_console(trip_items_dict)
 print('----------------Products----------------')
@@ -241,7 +276,13 @@ while current_days < duration_days:
         variation_num = 0
 #Виписую кількість продуктів в консоль
 print_output_in_console(out_dict)
-#Виписую вагу
+#Скидую змінні
+current_days = 0
+variation_num = 0
+#Виписую Вагу
 total_food_weight *= num_of_participation
-print("Total food weight is",int(total_food_weight),'g.')
-print("Food weight per person is",int(total_food_weight/num_of_participation),'g.')
+print("Total food weight is", int(total_food_weight), 'g.')
+print("Food weight per person is", int(total_food_weight/num_of_participation), 'g.')
+#Виписую дистанцію пройдену за день + залишок ваги
+print('--------------Daily Log----------------')
+calculate_daily_log(current_days, variation_num, total_food_weight)
